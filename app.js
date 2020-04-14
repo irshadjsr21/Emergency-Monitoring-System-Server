@@ -3,6 +3,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+const { sequelize } = require('./models');
 const indexRouter = require('./routes/index');
 
 const app = express();
@@ -34,5 +35,16 @@ app.use(function (err, req, res, next) {
     res.status(500).json({ message: 'Server error.' });
   }
 });
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connected to Database.');
+  })
+  .catch((error) => {
+    console.log('Failed to connect to database');
+    console.log(error);
+    process.exit(0);
+  });
 
 module.exports = app;
