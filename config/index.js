@@ -20,6 +20,13 @@ let config = {
     SECRET: 'secret',
     EXPIRES_IN: '30d',
   },
+  SEND_GRID: {
+    API_KEY: '1',
+  },
+  API_URL: 'http://localhost:3000',
+  HASH: {
+    SECRET: 'secret',
+  },
 };
 
 if (process.env.NODE_ENV == 'production') {
@@ -31,6 +38,12 @@ if (process.env.NODE_ENV == 'production') {
 
   config.JWT.SECRET = getEnvVariable('JWT_SECRET');
   config.JWT.EXPIRES_IN = getEnvVariable('JWT_EXPIRES_IN');
+
+  config.SEND_GRID.API_KEY = getEnvVariable('SEND_GRID_API_KEY');
+
+  config.API_URL = getEnvVariable('API_URL');
+
+  config.HASH.SECRET = getEnvVariable('HASH_SECRET');
 }
 
 module.exports = config;
