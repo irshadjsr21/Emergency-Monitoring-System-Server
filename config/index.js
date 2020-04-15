@@ -12,9 +12,13 @@ let config = {
   DB: {
     USER: 'irshad',
     PASSWORD: 'Sql@password123',
-    SCHEMA: 'e_commerce',
+    SCHEMA: 'ems',
     HOST: '127.0.0.1',
     DIALECT: 'mysql',
+  },
+  JWT: {
+    SECRET: 'secret',
+    EXPIRES_IN: '30d',
   },
 };
 
@@ -24,6 +28,9 @@ if (process.env.NODE_ENV == 'production') {
   config.DB.SCHEMA = getEnvVariable('DB_SCHEMA');
   config.DB.HOST = getEnvVariable('DB_HOST');
   config.DB.DIALECT = getEnvVariable('DB_DIALECT');
+
+  config.JWT.SECRET = getEnvVariable('JWT_SECRET');
+  config.JWT.EXPIRES_IN = getEnvVariable('JWT_EXPIRES_IN');
 }
 
 module.exports = config;
