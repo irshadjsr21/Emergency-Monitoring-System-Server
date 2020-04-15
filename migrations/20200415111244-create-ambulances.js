@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       vehicleNo: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
 	allowNull: false
       },
       email: {
