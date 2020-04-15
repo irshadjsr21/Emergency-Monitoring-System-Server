@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
             return uuid();
           },
         },
-        branchname: {
+        branchName: {
           type: DataTypes.STRING,
           allowNull: false,
         },

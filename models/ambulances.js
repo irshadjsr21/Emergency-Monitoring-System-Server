@@ -3,8 +3,8 @@ const { v4: uuid } = require('uuid');
 const bcryptjs = require('bcryptjs');
 
 module.exports = (sequelize, DataTypes) => {
-    const Paramedic = sequelize.define(
-      'Paramedic',
+    const Ambulances = sequelize.define(
+      'Ambulances',
       {
         id: {
           allowNull: true,
@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
             return uuid();
           },
         },
-        vno: {
+        vehicleNo: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       {}
     );
-    Paramedic.associate = function (models) {
+    Ambulances.associate = function (models) {
       // associations can be defined here
     };
   
@@ -47,15 +47,15 @@ module.exports = (sequelize, DataTypes) => {
       return user;
     };
   
-    Paramedic.beforeCreate(encryptPassword);
+    Ambulances.beforeCreate(encryptPassword);
   
-    Paramedic.beforeUpdate(encryptPassword);
+    Ambulances.beforeUpdate(encryptPassword);
   
-    Paramedic.prototype.checkPassword = async function (password) {
+    Ambulances.prototype.checkPassword = async function (password) {
       return await bcryptjs.compare(password, this.password);
     };
   
-    Paramedic.profileAttibutes = [
+    Ambulances.profileAttibutes = [
       'id',
       'vno',
       'email',
@@ -64,6 +64,6 @@ module.exports = (sequelize, DataTypes) => {
       'updatedAt',
     ];
   
-    return Paramedic;
+    return Ambulances;
   };
   

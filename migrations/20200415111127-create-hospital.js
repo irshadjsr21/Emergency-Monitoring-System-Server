@@ -4,27 +4,27 @@ module.exports = {
     return queryInterface.createTable('Hospitals', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
       },
-      id: {
-        type: Sequelize.UUID
-      },
-      branchname: {
-        type: Sequelize.STRING
+      branchName: {
+        type: Sequelize.STRING,
+	allowNull: false
       },
       location: {
         type: Sequelize.STRING
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+	allowNull: false
       },
       password: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+	allowNull: false
       },
       isVerified: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+	defaultValue: false
       },
       createdAt: {
         allowNull: false,
