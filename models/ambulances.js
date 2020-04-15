@@ -57,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
   
     Ambulances.profileAttibutes = [
       'id',
-      'vno',
+      'vehicleNo',
       'email',
       'isVerified',
       'createdAt',

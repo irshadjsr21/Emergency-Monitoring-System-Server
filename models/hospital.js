@@ -61,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
   
     Hospital.profileAttibutes = [
       'id',
-      'branchname',
+      'branchName',
       'location',
       'email',
       'isVerified',
