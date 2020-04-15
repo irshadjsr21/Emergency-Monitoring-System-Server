@@ -1,68 +1,29 @@
 const createError = require('http-errors');
 
 const createController = require('../createController');
-const validator = require('../../validators/admin/auth');
-const { Admin, Hash, Sequelize } = require('../../models');
-const { sendAdminVerifyMail } = require('../../utils/mailer');
+const validator = require('../../validators/ambulance/auth');
+const { Ambulance, Hash, Sequelize } = require('../../models');
 const jwt = require('../../utils/jwt');
 
 module.exports = {
-  signup: createController(
-    async (req, res) => {
-      const { inputBody } = res.locals;
-
-      const doExist = await Admin.findOne({
-        where: { email: inputBody.email },
-      });
-      if (doExist) {
-        throw new createError(409, 'Duplicate account.', {
-          errors: { email: 'This email is already in use.' },
-        });
-      }
-
-      const admin = await Admin.create(inputBody);
-
-      res.status(201).send();
-
-      sendAdminVerifyMail({ email: admin.email, userId: admin.id });
-    },
-    {
-      validation: {
-        asObject: true,
-        throwError: true,
-        validators: [validator.signup],
-      },
-      inputs: ['name', 'email', 'password'],
-    },
-  ),
-
   login: createController(
     async (req, res) => {
       const { inputBody } = res.locals;
 
-      const admin = await Admin.findOne(
+      const ambulance = await Ambulance.findOne(
         {
           where: { email: inputBody.email },
         },
         { attributes: ['id', 'isVerified', 'password'] },
       );
 
-      if (!admin) {
+      if (!ambulance) {
         throw new createError(404, 'User not found.', {
           errors: { email: 'Cannot find your account. Try signing up.' },
         });
       }
 
-      if (!admin.isVerified) {
-        throw new createError(403, 'Not verified.', {
-          errors: {
-            email:
-              'Please verify your email address by the link emailed to your account.',
-          },
-        });
-      }
-
-      const doMatch = await admin.checkPassword(inputBody.password);
+      const doMatch = await ambulance.checkPassword(inputBody.password);
 
       if (!doMatch) {
         throw new createError(401, 'Unauthorized.', {
@@ -70,7 +31,7 @@ module.exports = {
         });
       }
 
-      const token = await jwt.sign(admin.id, 'admin');
+      const token = await jwt.sign(ambulance.id, 'ambulance');
 
       res.status(200).send({ token });
     },
@@ -89,7 +50,7 @@ module.exports = {
     const hashObj = await Hash.findOne({
       where: {
         hash,
-        userType: 'admin',
+        userType: 'ambulance',
         validTill: { [Sequelize.Op.gte]: new Date() },
       },
     });
@@ -100,7 +61,7 @@ module.exports = {
       });
     }
 
-    await Admin.update({ isVerified: true }, { where: { id: hashObj.userId } });
+    await Ambulance.update({ isVerified: true }, { where: { id: hashObj.userId } });
 
     res.status(200).send('Your email has beed verified.');
 
@@ -110,8 +71,8 @@ module.exports = {
   profile: createController(async (req, res) => {
     const { userId } = res.locals;
 
-    const user = await Admin.findByPk(userId, {
-      attributes: Admin.profileAttibutes,
+    const user = await Ambulance.findByPk(userId, {
+      attributes: Ambulance.profileAttibutes,
     });
 
     res.json({ user });

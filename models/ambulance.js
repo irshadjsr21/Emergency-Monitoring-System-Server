@@ -3,8 +3,8 @@ const { v4: uuid } = require('uuid');
 const bcryptjs = require('bcryptjs');
 
 module.exports = (sequelize, DataTypes) => {
-  const Hospital = sequelize.define(
-    'Hospital',
+  const Ambulance = sequelize.define(
+    'Ambulance',
     {
       id: {
         allowNull: true,
@@ -24,13 +24,9 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT',
       },
-      branchName: {
-        type: DataTypes.STRING,
+      vehicleNo: {
+        type: DataTypes.INTEGER,
         allowNull: false,
-      },
-      location: {
-        type: DataTypes.STRING,
-        allowNull: true,
       },
       email: {
         type: DataTypes.STRING,
@@ -48,8 +44,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {},
   );
-  Hospital.associate = function (models) {
-    Hospital.belongsTo(models.Admin, {
+  Ambulance.associate = function (models) {
+    Ambulance.belongsTo(models.Admin, {
       foreignKey: 'adminId',
       as: 'admin'
     });
@@ -64,24 +60,23 @@ module.exports = (sequelize, DataTypes) => {
     return user;
   };
 
-  Hospital.beforeCreate(encryptPassword);
+  Ambulance.beforeCreate(encryptPassword);
 
-  Hospital.beforeUpdate(encryptPassword);
+  Ambulance.beforeUpdate(encryptPassword);
 
-  Hospital.prototype.checkPassword = async function (password) {
+  Ambulance.prototype.checkPassword = async function (password) {
     return await bcryptjs.compare(password, this.password);
   };
 
-  Hospital.profileAttibutes = [
+  Ambulance.profileAttibutes = [
     'id',
     'adminId',
-    'branchName',
-    'location',
+    'vehicleNo',
     'email',
     'isVerified',
     'createdAt',
     'updatedAt',
   ];
 
-  return Hospital;
+  return Ambulance;
 };

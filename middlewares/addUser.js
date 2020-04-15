@@ -1,5 +1,5 @@
 const jwt = require('../utils/jwt');
-const { Admin } = require('../models');
+const { Admin, Ambulance, Hospital } = require('../models');
 
 module.exports = async (req, res, next) => {
   try {
@@ -19,6 +19,17 @@ module.exports = async (req, res, next) => {
               user = await Admin.findByPk(id, {
                 attributes: ['id', 'isVerified'],
               });
+              break;
+            case 'ambulance':
+              user = await Ambulance.findByPk(id, {
+                attributes: ['id', 'isVerified'],
+              });
+              break;
+            case 'hospital':
+              user = await Hospital.findByPk(id, {
+                attributes: ['id', 'isVerified'],
+              });
+              break;
           }
 
           if (user) {

@@ -10,9 +10,9 @@ const getEnvVariable = (key) => {
 
 let config = {
   DB: {
-    USER: 'root',
-    PASSWORD: '',
-    SCHEMA: 'mh',
+    USER: 'irshad',
+    PASSWORD: 'Sql@password123',
+    SCHEMA: 'ems',
     HOST: '127.0.0.1',
     DIALECT: 'mysql',
   },

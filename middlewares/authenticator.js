@@ -2,6 +2,7 @@ const createError = require('http-errors');
 
 module.exports = {
   admin: (req, res, next) => {
+    console.log(res.locals);
     if (
       res.locals.isLoggedIn &&
       res.locals.userId &&
@@ -14,6 +15,30 @@ module.exports = {
           createError(403, { message: 'Please verify your email address.' }),
         );
       }
+    } else {
+      next(createError(401, { message: 'Unauthorized user' }));
+    }
+  },
+
+  ambulance: (req, res, next) => {
+    if (
+      res.locals.isLoggedIn &&
+      res.locals.userId &&
+      res.locals.userType === 'ambulance'
+    ) {
+      next();
+    } else {
+      next(createError(401, { message: 'Unauthorized user' }));
+    }
+  },
+
+  hospital: (req, res, next) => {
+    if (
+      res.locals.isLoggedIn &&
+      res.locals.userId &&
+      res.locals.userType === 'hospital'
+    ) {
+      next();
     } else {
       next(createError(401, { message: 'Unauthorized user' }));
     }
