@@ -1,5 +1,6 @@
 const createError = require('http-errors');
 const express = require('express');
+require('dotenv').config();
 
 const { sequelize } = require('./models');
 const indexRouter = require('./routes/index');
