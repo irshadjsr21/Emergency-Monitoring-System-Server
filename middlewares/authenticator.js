@@ -7,7 +7,13 @@ module.exports = {
       res.locals.userId &&
       res.locals.userType === 'admin'
     ) {
-      next();
+      if (res.locals.isVerified) {
+        next();
+      } else {
+        next(
+          createError(403, { message: 'Please verify your email address.' }),
+        );
+      }
     } else {
       next(createError(401, { message: 'Unauthorized user' }));
     }

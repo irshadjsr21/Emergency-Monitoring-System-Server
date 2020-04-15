@@ -16,13 +16,16 @@ module.exports = async (req, res, next) => {
           let user;
           switch (type) {
             case 'admin':
-              user = await Admin.count({ where: { id } });
+              user = await Admin.findByPk(id, {
+                attributes: ['id', 'isVerified'],
+              });
           }
 
           if (user) {
             res.locals.userType = type;
             res.locals.userId = id;
             res.locals.isLoggedIn = true;
+            res.locals.isVerified = user.isVerified;
           }
         }
       }
