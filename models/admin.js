@@ -35,7 +35,15 @@ module.exports = (sequelize, DataTypes) => {
     {},
   );
   Admin.associate = function (models) {
-    // associations can be defined here
+    Admin.hasMany(models.Ambulance, {
+      foreignKey: 'adminId',
+      as: 'ambulances'
+    });
+
+    Admin.hasMany(models.Hospital, {
+      foreignKey: 'adminId',
+      as: 'hospitals'
+    });
   };
 
   const encryptPassword = async (user) => {

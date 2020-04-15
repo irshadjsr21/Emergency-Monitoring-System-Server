@@ -4,37 +4,47 @@ module.exports = {
     return queryInterface.createTable('Ambulances', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+      },
+      adminId: {
+        type: Sequelize.UUID,
+        allowNull: false,
+        references: {
+          model: 'Admins',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'RESTRICT',
       },
       vehicleNo: {
-        type: Sequelize.INTEGER,
-	allowNull: false
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       email: {
         type: Sequelize.STRING,
-	allowNull: false
+        allowNull: false,
+        unique: true,
       },
       password: {
         type: Sequelize.STRING,
-	allowNull: false
+        allowNull: false,
       },
       isVerified: {
         type: Sequelize.BOOLEAN,
-	defaultValue: false
+        defaultValue: false,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('Ambulances');
-  }
+  },
 };

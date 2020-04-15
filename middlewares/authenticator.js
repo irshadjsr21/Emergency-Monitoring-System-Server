@@ -18,4 +18,16 @@ module.exports = {
       next(createError(401, { message: 'Unauthorized user' }));
     }
   },
+
+  ambulance: (req, res, next) => {
+    if (
+      res.locals.isLoggedIn &&
+      res.locals.userId &&
+      res.locals.userType === 'ambulance'
+    ) {
+      next();
+    } else {
+      next(createError(401, { message: 'Unauthorized user' }));
+    }
+  },
 };
