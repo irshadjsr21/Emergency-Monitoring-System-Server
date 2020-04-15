@@ -38,7 +38,7 @@ module.exports = {
         throwError: true,
         validators: [validator.signup],
       },
-      inputs: ['name', 'email', 'password','location','branchName'],
+      inputs: ['email', 'password','location','branchName'],
     },
   ),
 

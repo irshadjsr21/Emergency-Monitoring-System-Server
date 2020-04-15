@@ -2,11 +2,6 @@ const { body } = require('express-validator');
 
 module.exports = {
   signup: [
-    body('name')
-      .trim()
-      .isString()
-      .notEmpty()
-      .withMessage('Name should be present.'),
     body('email')
       .trim()
       .isEmail()
